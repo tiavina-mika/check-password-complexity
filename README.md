@@ -53,6 +53,8 @@ console.log(checkPasswordComplexity("abcdefgh9F=").value); // strong
 |checkedRules|`(minLength, lowercase, uppercase, number, specialCharacter)[]`| List of all checked values
 |length|`number`| Length of the password
 
+<br />
+
 ```tsx
   console.log(checkPasswordComplexity("abcdefg"));
   /**
@@ -85,6 +87,9 @@ console.log(checkPasswordComplexity("abcdefgh9F=").value); // strong
 |----------------|-------------------------------|-----------------------------|-----------------------------|
 |minLength|`number`|8| Number of minimum character
 |allowedSpecialChar|`string`|!@#$%^&*(),.?\":{}<>\\[\\]\\\\/`~;'_+=-| regex for the special character to use
+
+<br />
+
 ```tsx
   console.log(checkPasswordComplexity("abcdefg", { minLength: 6 }));
   /**
