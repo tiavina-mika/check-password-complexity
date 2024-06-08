@@ -7,7 +7,9 @@
 </p>
 
 ## Demo
-Try it yourself in this **[CodeSandbox live demo](https://codesandbox.io/p/github/tiavina-mika/check-password-complexity-demo)**
+Try it yourself in this **[CodeSandbox demo](https://codesandbox.io/p/github/tiavina-mika/check-password-complexity-demo)**
+Or
+this **[Live demo](https://check-password-complexity.netlify.app/)**
 
 
 ## Installation
