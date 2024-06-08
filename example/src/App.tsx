@@ -1,49 +1,36 @@
-import { TiptapParser } from "check-password-complexity";
-
-const html = `
-<h1>Here is an exemple of code</h1>
-<p>This is a stringified html with code</p>
-<br/>
-<pre><code>import Link from 'next/link';
-
-import Title from '@/components/typography/Title';
-
-// some comment here
-
-const NotFound = () =&gt; (
-  &lt;html lang="en"&gt;
-    &lt;body className=""&gt;
-      &lt;div className="flex min-h-screen flex-col items-center justify-center space-y-8"&gt;
-        &lt;Title className="text-4xl font-semibold"&gt;404 - Page Not Found&lt;/Title&gt;
-
-        &lt;div className="space-x-4"&gt;
-          &lt;Link
-            className="text-blue-600 underline duration-300 hover:text-red-500"
-            href="/"
-          &gt;
-            Homepage
-          &lt;/Link&gt;
-          &lt;Link
-            className="text-blue-600 underline duration-300 hover:text-red-500"
-            href="/contact"
-          &gt;
-            Contact Us
-          &lt;/Link&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/body&gt;
-  &lt;/html&gt;
-);
-export default NotFound;
-</code></pre><p></p>
-`;
+import { ChangeEvent, useState } from "react";
+import { checkPasswordComplexity } from "check-password-complexity";
 
 const App = () => {
+  const [password, setPassword] = useState<string>('');
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  }
   return (
-    <TiptapParser language="tsx" classNames={{ h1ClassName: 'h1'}}>
-      {html}
-    </TiptapParser>
-  );
-};
+    <div className="root">
+      <div>
+        <h1>Password Complexity Checker</h1>
+      </div>
+      <div className="card">
+        <div className="form">
+          <label>Password</label>
+          <input
+            type="text"
+            value={password}
+            onChange={handleChange}
+            placeholder="Enter the password to check its complexity"
+          />
+        </div>
+
+        <div className="result">
+          <label>Result:</label>
+          <pre>{JSON.stringify(checkPasswordComplexity(password, { minLength: 8 }), null, 2)}</pre>
+          {/* <span>{checkPasswordComplexity(password, { minLength: 8 }).value}</span> */}
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export default App;
