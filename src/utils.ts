@@ -26,7 +26,7 @@ const scoreOptions: ScoreOption[] = [
 
 export const checkPasswordComplexity = (
   password: string,
-  options: Options
+  options?: Options
 ): CheckOptionResult => {
   const minLength = options?.minLength || 8;
   const allowedSpecialChar = options?.allowedSpecialChar || "!@#$%^&*(),.?\":{}|<>\\[\\]\\\\/`~;'_+=-";
