@@ -1,8 +1,8 @@
 export {
-  checkPasswordComplexity,
+  checkPasswordComplexity
 } from './utils';
 
 export {
   type Options,
-  type CheckOptionResult,
+  type CheckOptionResult
 } from './index.d';
