@@ -1,13 +1,20 @@
 {
   "name": "check-password-complexity",
-  "version": "0.0.4",
-  "description": "A simple utility to check password strength and complexity",
+  "version": "0.1.0",
+  "description": "A simple javascript utility to check password strength and complexity",
   "keywords": [
     "password",
     "password-strength",
     "password-complexity",
     "strong-password",
-    "password-validation"
+    "password-validation",
+    "zod",
+    "yup",
+    "password-checker",
+    "password-strength",
+    "password-validator",
+    "strong-password",
+    "secure password"
   ],
   "homepage": "https://github.com/tiavina-mika/check-password-complexity",
   "bugs": {

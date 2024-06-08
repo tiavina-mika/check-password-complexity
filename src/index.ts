@@ -5,4 +5,4 @@ export {
 export {
   type Options,
   type CheckOptionResult
-} from './types';
+} from './types.d';
