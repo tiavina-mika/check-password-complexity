@@ -26,7 +26,6 @@ const App = () => {
         <div className="result">
           <label>Result:</label>
           <pre>{JSON.stringify(checkPasswordComplexity(password, { minLength: 8 }), null, 2)}</pre>
-          {/* <span>{checkPasswordComplexity(password, { minLength: 8 }).value}</span> */}
         </div>
       </div>
     </div>
