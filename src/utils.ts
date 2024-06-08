@@ -1,4 +1,4 @@
-import { CheckOption, CheckOptionResult, Options, ScoreOption } from './index.d';
+import { CheckOption, CheckOptionResult, Options, ScoreOption } from './types';
 
 const scoreOptions: ScoreOption[] = [
   {
