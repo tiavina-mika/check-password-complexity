@@ -28,6 +28,11 @@ on:
   check_suite:
     types:
       - completed
+  workflow_dispatch:
+    inputs:
+      pullRequestNumber:
+        description: Pull request number to auto-approve
+        required: false
 
 permissions:
   contents: write
@@ -170,6 +175,7 @@ jobs:
       - uses: hmarr/auto-approve-action@v4
         with:
           review-message: "Auto approve sync PRs to auto merge them"
+          pull-request-number: ${{ github.event.inputs.pullRequestNumber }}
 
     # automerge:
     #   needs: [autoapprove]
