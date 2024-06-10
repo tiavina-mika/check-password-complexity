@@ -18,7 +18,8 @@ on:
   check_suite:
     types:
       - completed
-
+  repository_dispatch:
+    types: [ ready-to-merge ] # This was the main fix
 permissions:
   contents: write
   packages: write
@@ -28,6 +29,20 @@ env:
   APP_NAME: check-password-complexity
 
 jobs:
+  repo-event:
+    name: Set Repository Event
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          event-type: ready-to-merge
+          client-payload: '{"github": ${{ toJson(github) }}}'
+        if: github.event_name == 'pull_request'
+
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -140,45 +155,49 @@ jobs:
           create-summary: true
 
       - run: echo "1. skipped = ${{ steps.changelog.outputs.skipped }}, tag = ${{ steps.changelog.outputs.tag }}, clean_changelog = ${{ steps.changelog.outputs.clean_changelog }}, version = ${{ steps.changelog.outputs.version }}"
+      - run: echo "2. PR_BRANCH = ${{ env.PR_BRANCH }}"
 
       - name: Create Changelog PR
         if: steps.changelog.outputs.skipped == 'false'
         run: |
           gh pr create --base main --head ${{ env.PR_BRANCH }} --title 'chore(release): ${{ steps.changelog.outputs.tag }} [skip-ci]' --body '${{ steps.changelog.outputs.clean_changelog }}'
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-
+          GITHUB_TOKEN: ${{ secrets.GH_OWNER_TOKEN }}
 
       - run: echo "3. skipped = ${{ steps.changelog.outputs.skipped }}"
+      - id: automerge
+        name: automerge
+        uses: "pascalgn/automerge-action@v0.16.3"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GH_TOKEN }}"
+          MERGE_LABELS: "!x"
+          UPDATE_LABELS: ""
+          MERGE_DELETE_BRANCH: true
+          MERGE_RETRIES: "10"
+          MERGE_RETRY_SLEEP: "5000"
+          MERGE_REQUIRED_APPROVALS: "0"
 
+      - name: feedback
+        if: ${{ steps.automerge.outputs.mergeResult == 'merged' }}
+        run: |
+          echo "Pull request ${{ steps.automerge.outputs.pullRequestNumber }} merged!"
       # - name: Approve Changelog PR
       #   if: steps.changelog.outputs.skipped == 'false'
       #   run: |
       #     gh pr review --approve ${{ env.PR_BRANCH }}
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-      - id: automerge
-        name: automerge
-        uses: "pascalgn/automerge-action@v0.15.6"
-        env:
-          GITHUB_TOKEN: "${{ secrets.GH_TOKEN }}"
-          MERGE_LABELS: "!x"
-          UPDATE_LABELS: ""
-      - name: feedback
-        if: ${{ steps.automerge.outputs.mergeResult == 'merged' }}
-        run: |
-          echo "Pull request ${{ steps.automerge.outputs.pullRequestNumber }} merged!"
 
-      - run: echo "4. Approve Changelog PR skipped = ${{ steps.changelog.outputs.skipped }}"
+      # - run: echo "4. Approve Changelog PR skipped = ${{ steps.changelog.outputs.skipped }}"
 
-      - name: Merge Changelog PR
-        if: steps.changelog.outputs.skipped == 'false'
-        run: |
-          gh pr merge --squash --auto --delete-branch ${{ env.PR_BRANCH }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      # - name: Merge Changelog PR
+      #   if: steps.changelog.outputs.skipped == 'false'
+      #   run: |
+      #     gh pr merge --squash --auto --delete-branch ${{ env.PR_BRANCH }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
-      - run: echo "5. Merge Changelog PR skipped = ${{ steps.changelog.outputs.skipped }}"
+      # - run: echo "5. Merge Changelog PR skipped = ${{ steps.changelog.outputs.skipped }}"
 
   release:
     name: Release
