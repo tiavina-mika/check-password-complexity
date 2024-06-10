@@ -43,6 +43,4 @@ jobs:
           release_name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
 
-      - run: echo "🎉 tag_name ${{ steps.changelog.outputs.tag}}"
-      - run: echo "🎉 release_name ${{ steps.changelog.outputs.tag}}"
-      - run: echo "🎉 body ${{ steps.changelog.outputs.clean_changelog}}"
+      - run: echo "🎉 tag_name ${{ steps.changelog.outputs.tag }}"
