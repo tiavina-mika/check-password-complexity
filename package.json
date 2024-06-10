@@ -1,6 +1,6 @@
 {
   "name": "check-password-complexity",
-  "version": "0.2.20",
+  "version": "0.2.21",
   "description": "A simple javascript utility to check password strength and complexity",
   "keywords": [
     "password",
