@@ -128,11 +128,13 @@ jobs:
           git-user-email: "github-actions[bot]@users.noreply.github.com"
           git-branch: ${{ env.PR_BRANCH }}
           skip-git-pull: true
-          output-file: false
                     # this will update the version in package.json
           # and therefore the npm package version
           version-file: './package.json'
           create-summary: true
+
+      - run: echo "1. skipped = ${{ steps.changelog.outputs.skipped }}, tag = ${{ steps.changelog.outputs.tag }}, clean_changelog = ${{ steps.changelog.outputs.clean_changelog }}, version = ${{ steps.changelog.outputs.version }}"
+      - run: echo "2. PR_BRANCH = ${{ env.PR_BRANCH }}"
 
       - name: Create Changelog PR
         if: steps.changelog.outputs.skipped == 'false'
@@ -141,12 +143,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
+      - run: echo "3. skipped = ${{ steps.changelog.outputs.skipped }}"
+
       - name: Approve Changelog PR
         if: steps.changelog.outputs.skipped == 'false'
         run: |
           gh pr review --approve ${{ env.PR_BRANCH }}
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - run: echo "4. Approve Changelog PR skipped = ${{ steps.changelog.outputs.skipped }}"
 
       - name: Merge Changelog PR
         if: steps.changelog.outputs.skipped == 'false'
@@ -155,6 +161,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
+      - run: echo "5. Merge Changelog PR skipped = ${{ steps.changelog.outputs.skipped }}"
 
   release:
     name: Release
@@ -165,6 +172,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - run: echo "6. github event = ${{ github.event_name }}"
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
