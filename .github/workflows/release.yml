@@ -12,6 +12,12 @@ on:
     branches:
       - main
   pull_request:
+  pull_request_review:
+    types:
+      - submitted
+  check_suite:
+    types:
+      - completed
 
 permissions:
   contents: write
@@ -156,6 +162,8 @@ jobs:
         uses: "pascalgn/automerge-action@v0.15.6"
         env:
           GITHUB_TOKEN: "${{ secrets.GH_TOKEN }}"
+          MERGE_LABELS: "!x"
+          UPDATE_LABELS: ""
       - name: feedback
         if: ${{ steps.automerge.outputs.mergeResult == 'merged' }}
         run: |
