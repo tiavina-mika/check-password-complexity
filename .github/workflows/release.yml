@@ -1,6 +1,6 @@
 # doc: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
 name: Releases
-run-name: ${{ github.actor }} publish to npm 🚀
+run-name: ${{ github.actor }} releases 🚀
 
 on:
   push:

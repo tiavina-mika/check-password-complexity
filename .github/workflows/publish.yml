@@ -6,6 +6,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment:
+      name: Grim #your environment name
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,6 +27,6 @@ jobs:
       - name: Install dependencies
         run: yarn
       - name: Publish package on NPM 📦
-        run: yarn npm publish // if using yarn
+        run: yarn npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
