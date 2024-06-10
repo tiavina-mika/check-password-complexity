@@ -56,6 +56,9 @@ jobs:
         with:
           github-token: ${{ secrets.GH_TOKEN }}
           version-file: './package.json'
+      - run: echo "🎉 tag_name ${{ steps.changelog.outputs.tag}} event."
+      - run: echo "🎉 release_name ${{ steps.changelog.outputs.tag}} event."
+      - run: echo "🎉 body ${{ steps.changelog.outputs.clean_changelog}} event."
       - name: create release
         uses: actions/create-release@v1
         if: ${{ steps.changelog.outputs.skipped == 'false' }}

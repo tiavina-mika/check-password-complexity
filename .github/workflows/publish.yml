@@ -7,7 +7,7 @@
 name: Publish to NPM
 run-name: ${{ github.actor }} publish to npm 🚀
 on:
-  main:
+  release:
     types: [created]
 jobs:
   build:
