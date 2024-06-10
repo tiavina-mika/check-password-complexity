@@ -1,3 +1,12 @@
+## [0.2.12](https://github.com/tiavina-mika/check-password-complexity/compare/v0.2.11...v0.2.12) (2024-06-10)
+
+
+### Bug Fixes
+
+* workflow ([832f119](https://github.com/tiavina-mika/check-password-complexity/commit/832f1192619670cb723282f790f286de6dbcc02c))
+
+
+
 ## [0.2.11](https://github.com/tiavina-mika/check-password-complexity/compare/v0.2.10...v0.2.11) (2024-06-10)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * workflow ([838ebf6](https://github.com/tiavina-mika/check-password-complexity/commit/838ebf6603f320d62f70b1da43baea9232ae6750))
-
-
-
-## [0.2.7](https://github.com/tiavina-mika/check-password-complexity/compare/v0.2.6...v0.2.7) (2024-06-10)
-
-
-### Bug Fixes
-
-* actions ([7e0694a](https://github.com/tiavina-mika/check-password-complexity/commit/7e0694a3b49746a3d48d59358f8f38c2ac37ac18))
 
 
 
