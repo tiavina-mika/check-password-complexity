@@ -29,6 +29,8 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           # instead of using the local cache in .yarn folder, since it's in .gitignore
           # cache: 'yarn'
+      - name: clean cache
+        run: yarn cache clean --all
       - name: Install dependencies
         run: yarn
       - name: Run Jest tests
@@ -41,3 +43,5 @@ jobs:
         run: yarn npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Update example lib
+        run: yarn example
