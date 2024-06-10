@@ -134,7 +134,6 @@ jobs:
           create-summary: true
 
       - run: echo "1. skipped = ${{ steps.changelog.outputs.skipped }}, tag = ${{ steps.changelog.outputs.tag }}, clean_changelog = ${{ steps.changelog.outputs.clean_changelog }}, version = ${{ steps.changelog.outputs.version }}"
-      - run: echo "2. PR_BRANCH = ${{ env.PR_BRANCH }}"
 
       - name: Create Changelog PR
         if: steps.changelog.outputs.skipped == 'false'
