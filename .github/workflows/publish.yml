@@ -2,6 +2,7 @@
 # doc: https://github.com/TriPSs/conventional-changelog-action
 # tuto: https://nanthakumaran.medium.com/how-to-automate-releases-and-publish-packages-to-npm-using-github-actions-910d5128c0fa
 # npm token + github action: https://taozhi.medium.com/publish-package-to-npm-and-gpr-with-github-actions-e05793f72455
+# run jest: https://qa-nora.medium.com/unit-testing-with-jest-and-integration-with-github-actions-bc241b31d257
 # --------------------------------------------------- #
 
 name: Publish to NPM
