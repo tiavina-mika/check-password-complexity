@@ -109,7 +109,7 @@ jobs:
       version: ${{ steps.changelog.outputs.version }}
 
     env:
-      PR_BRANCH: release-ci-${{ github.sha }}
+      PR_BRANCH: release-${{ github.sha }}
 
     steps:
       - name: Checkout
