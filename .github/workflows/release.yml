@@ -13,7 +13,7 @@ on:
       - main
 
 jobs:
-  build:
+  changelog:
     runs-on: ubuntu-latest
     permissions:
       contents: write # to be able to publish a GitHub release
