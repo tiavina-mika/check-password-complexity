@@ -62,7 +62,7 @@
     "copy-files-esm": "copyfiles -u 1 src/*types.d.ts dist/esm",
     "clean-cache": "yarn cache clean --all",
     "fixImportExtension": "ts-add-js-extension --dir=dist",
-    "example": "cd example && yarn upgrade check-password-complexity && yarn dev",
+    "example": "cd example && yarn upgrade",
     "test": "jest",
     "test:watch": "jest watch",
     "test:coverage": "jest --coverage"
