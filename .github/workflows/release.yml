@@ -145,12 +145,21 @@ jobs:
 
       - run: echo "3. skipped = ${{ steps.changelog.outputs.skipped }}"
 
-      - name: Approve Changelog PR
-        if: steps.changelog.outputs.skipped == 'false'
-        run: |
-          gh pr review --approve ${{ env.PR_BRANCH }}
+      # - name: Approve Changelog PR
+      #   if: steps.changelog.outputs.skipped == 'false'
+      #   run: |
+      #     gh pr review --approve ${{ env.PR_BRANCH }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      - id: automerge
+        name: automerge
+        uses: "pascalgn/automerge-action@v0.15.6"
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: "${{ secrets.GH_TOKEN }}"
+      - name: feedback
+        if: ${{ steps.automerge.outputs.mergeResult == 'merged' }}
+        run: |
+          echo "Pull request ${{ steps.automerge.outputs.pullRequestNumber }} merged!"
 
       - run: echo "4. Approve Changelog PR skipped = ${{ steps.changelog.outputs.skipped }}"
 
