@@ -1,4 +1,9 @@
-# doc: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
+# --------------------------------------------------- #
+# doc: https://github.com/TriPSs/conventional-changelog-action
+# tuto: https://nanthakumaran.medium.com/how-to-automate-releases-and-publish-packages-to-npm-using-github-actions-910d5128c0fa
+# npm token + github action: https://taozhi.medium.com/publish-package-to-npm-and-gpr-with-github-actions-e05793f72455
+# --------------------------------------------------- #
+
 name: Releases
 run-name: ${{ github.actor }} releases 🚀
 
