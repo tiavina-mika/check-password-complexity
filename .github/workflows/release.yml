@@ -61,5 +61,4 @@ jobs:
         with:
           files: README.md
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: echo "🎉 tag_name ${{ github.ref_name }}"
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
