@@ -31,6 +31,8 @@ jobs:
         uses: TriPSs/conventional-changelog-action@v5
         with:
           github-token: ${{ secrets.GH_TOKEN }}
+          # this will update the version in package.json
+          # and therefore the npm package version
           version-file: './package.json'
 
       - name: create release
