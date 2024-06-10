@@ -140,9 +140,9 @@ jobs:
         run: |
           gh pr create --base main --head ${{ env.PR_BRANCH }} --title 'chore(release): ${{ steps.changelog.outputs.tag }} [skip-ci]' --body '${{ steps.changelog.outputs.clean_changelog }}'
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_OWNER_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
-          
+
       - run: echo "3. skipped = ${{ steps.changelog.outputs.skipped }}"
 
       - name: Approve Changelog PR
@@ -150,7 +150,7 @@ jobs:
         run: |
           gh pr review --approve ${{ env.PR_BRANCH }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_OWNER_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - run: echo "4. Approve Changelog PR skipped = ${{ steps.changelog.outputs.skipped }}"
 
@@ -159,7 +159,7 @@ jobs:
         run: |
           gh pr merge --squash --auto --delete-branch ${{ env.PR_BRANCH }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_OWNER_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - run: echo "5. Merge Changelog PR skipped = ${{ steps.changelog.outputs.skipped }}"
 
@@ -178,7 +178,7 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          token: ${{ secrets.GH_OWNER_TOKEN }}
+          token: ${{ secrets.GH_TOKEN }}
           tag_name: ${{ needs.changelog.outputs.tag }}
           prerelease: false
           draft: false
