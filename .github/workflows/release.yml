@@ -12,14 +12,23 @@ on:
     branches:
       - main
   pull_request:
+    types:
+      - labeled
+      - unlabeled
+      - synchronize
+      - opened
+      - edited
+      - ready_for_review
+      - reopened
+      - unlocked
+  status: {}
   pull_request_review:
     types:
       - submitted
   check_suite:
     types:
       - completed
-  repository_dispatch:
-    types: [ ready-to-merge ] # This was the main fix
+
 permissions:
   contents: write
   packages: write
@@ -29,20 +38,6 @@ env:
   APP_NAME: check-password-complexity
 
 jobs:
-  repo-event:
-    name: Set Repository Event
-    permissions:
-      contents: write
-    runs-on: ubuntu-latest
-    steps:
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-          event-type: ready-to-merge
-          client-payload: '{"github": ${{ toJson(github) }}}'
-        if: github.event_name == 'pull_request'
-
   lint:
     name: Lint
     runs-on: ubuntu-latest
