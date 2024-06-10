@@ -24,11 +24,11 @@ describe('test rules passed', () => {
     expect(checkPasswordComplexity("abcdefgh").checkedRules).toStrictEqual(['lowercase']);
   });
 
-  test('test if abcdefg8 is lowercase,number', () => {
+  test('abcdefg8 is lowercase,number', () => {
     expect(checkPasswordComplexity("abcdefg8").checkedRules).toStrictEqual(['lowercase', 'number']);
   });
 
-  test('test if abcdefgh9 is lowercase, number and minLength', () => {
+  test('abcdefgh9 has no uppercase and special char', () => {
     expect(checkPasswordComplexity("abcdefgh9").checkedRules).toStrictEqual(['minLength', 'lowercase', 'number']);
   });
 
