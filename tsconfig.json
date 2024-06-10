@@ -21,5 +21,5 @@
     "allowJs": false,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["./src", "vite.config.ts", "dts-bundle-generator.config.ts"]
+  "include": ["./src", "vite.config.ts", "dts-bundle-generator.config.ts", "src/__tests__/**/*.ts"]
 }

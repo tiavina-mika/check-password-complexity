@@ -19,6 +19,12 @@ module.exports = {
     project: "./tsconfig.json",
     sourceType: "module"
   },
+  "overrides": [
+    {
+      "files": ["/src/__tests__/**/*"],
+      "plugins": ["jest"],
+    }
+  ],
   rules: {
     'prettier/prettier': ['off', { singleQuote: true }],
     "react/no-unknown-property": ["error", { "ignore": ["css"] }],
