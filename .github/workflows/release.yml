@@ -1,5 +1,5 @@
 # doc: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
-name: Publish Package to npmjs
+name: Releases
 run-name: ${{ github.actor }} publish to npm 🚀
 
 on:
@@ -23,28 +23,42 @@ jobs:
         with:
           persist-credentials: false
 
-      # need this for using yarn
-      - name: Enable Corepack
-        run: corepack enable
+      # # need this for using yarn
+      # - name: Enable Corepack
+      #   run: corepack enable
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          registry-url: 'https://registry.npmjs.org'
-          # instead of using the local cache in .yarn folder, since it's in .gitignore
-          cache: 'yarn'
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: '20.x'
+      #     registry-url: 'https://registry.npmjs.org'
+      #     # instead of using the local cache in .yarn folder, since it's in .gitignore
+      #     cache: 'yarn'
 
-      - name: Replace branch name in branches array
-        run: sed -i 's|'current-branch'|'${{ github.ref_name }}'|' .releaserc
-        
-      - name: Install dependencies
-        run: yarn
+      # - name: Replace branch name in branches array
+      #   run: sed -i 's|'current-branch'|'${{ github.ref_name }}'|' .releaserc
+
+      # - name: Install dependencies
+      #   run: yarn
 
       # for Yarn v1, use `yarn publish` instead
       # - run: yarn npm publish // if using yarn
-      - name: Release
+      # - name: Release
+      #   env:
+      #     # this will be used in .yarnrc.yml
+      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      #   run: npx semantic-release
+      - name: Conventional Changelog Action
+        uses: TriPSs/conventional-changelog-action@v5
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          version-file: './package.json,./yarn.lock'
+      - name: create release
+        uses: actions/create-release@v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
         env:
-          # this will be used in .yarnrc.yml
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release
+        with:
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          release_name: ${{ steps.changelog.outputs.tag }}
+          body: ${{ steps.changelog.outputs.clean_changelog }}
