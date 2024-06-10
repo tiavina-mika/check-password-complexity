@@ -11,20 +11,114 @@ on:
   push:
     branches:
       - main
+  pull_request:
+
+permissions:
+  contents: write
+  packages: write
+  pull-requests: write
+
+env:
+  APP_NAME: check-password-complexity
 
 jobs:
-  changelog:
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
-    permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
-      id-token: write # to enable use of OIDC for npm provenance
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          persist-credentials: false
+          node-version: '20'
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Lint
+        run: yarn lint
+
+  test:
+    name: Test
+    needs: lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Test
+        run: yarn test:coverage
+
+  build:
+    name: Build
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build
+        run: yarn build
+
+  changelog:
+    name: Changelog
+    needs:
+      - lint
+      - test
+      - build
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+
+    outputs:
+      skipped: ${{ steps.changelog.outputs.skipped }}
+      tag: ${{ steps.changelog.outputs.tag }}
+      clean_changelog: ${{ steps.changelog.outputs.clean_changelog }}
+      version: ${{ steps.changelog.outputs.version }}
+
+    env:
+      PR_BRANCH: release-ci-${{ github.sha }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create Branch
+        run: |
+          git checkout -b ${{ env.PR_BRANCH }}
+
+      - name: Create Changelog
+        uses: TriPSs/conventional-changelog-action@v5
+        id: changelog
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          git-user-name: "github-actions[bot]"
+          git-user-email: "github-actions[bot]@users.noreply.github.com"
+          git-branch: ${{ env.PR_BRANCH }}
+          skip-git-pull: true
+          output-file: false
+          version-file: './package.json'
+          create-summary: true
 
       - name: Conventional Changelog Action
         id: changelog
@@ -35,30 +129,56 @@ jobs:
           # and therefore the npm package version
           version-file: './package.json'
 
-      # - name: create release
-      #   uses: actions/create-release@v1
-      #   if: ${{ steps.changelog.outputs.skipped == 'false' }}
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-      #   with:
-      #     tag_name: ${{ steps.changelog.outputs.tag }}
-      #     release_name: ${{ steps.changelog.outputs.tag }}
-      #     body: ${{ steps.changelog.outputs.clean_changelog }}
 
-      # - name: Create release
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     tag: ${{ github.ref_name }}
-      #   run: |
-      #     gh release create "$tag" \
-      #         --repo="$GITHUB_REPOSITORY" \
-      #         --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
-      #         --generate-notes
-
-      - name: create release
-        uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: README.md
+      - name: Create Changelog PR
+        if: steps.changelog.outputs.skipped == 'false'
+        run: |
+          gh pr create --base main --head ${{ env.PR_BRANCH }} --title 'chore(release): ${{ steps.changelog.outputs.tag }} [skip-ci]' --body '${{ steps.changelog.outputs.clean_changelog }}'
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Approve Changelog PR
+        if: steps.changelog.outputs.skipped == 'false'
+        run: |
+          gh pr review --approve ${{ env.PR_BRANCH }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Merge Changelog PR
+        if: steps.changelog.outputs.skipped == 'false'
+        run: |
+          gh pr merge --squash --auto --delete-branch ${{ env.PR_BRANCH }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+
+  release:
+    name: Release
+    needs: changelog
+    if: github.event_name != 'pull_request' && needs.changelog.outputs.skipped == 'false'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: yarn
+
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          tag_name: ${{ needs.changelog.outputs.tag }}
+          prerelease: false
+          draft: false
+          files: README.md
+          generate_release_notes: true
+          name: ${{ needs.changelog.outputs.tag }}
+          body: |
+            <details>
+              <summary>🤖 Autogenerated Conventional Changelog</summary>
+
+            ${{ needs.changelog.outputs.clean_changelog }}
+            </details>
