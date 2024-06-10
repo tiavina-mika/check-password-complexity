@@ -24,9 +24,13 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           # instead of using the local cache in .yarn folder, since it's in .gitignore
           cache: 'yarn'
-      - name: Install dependencies
-        run: yarn
+      # - name: Install dependencies
+      #   run: yarn
+      # - name: Publish package on NPM 📦
+      #   run: yarn npm publish
+      - name: Install dependencies and build 🔧
+        run: npm ci
       - name: Publish package on NPM 📦
-        run: yarn npm publish
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
