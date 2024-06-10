@@ -15,8 +15,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment:
-      name: Grim #your environment name
     permissions:
       contents: write # to be able to publish a GitHub release
       issues: write # to be able to comment on released issues

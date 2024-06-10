@@ -12,8 +12,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment:
-      name: Grim #your environment name
     steps:
       - name: Checkout
         uses: actions/checkout@v4
