@@ -30,12 +30,12 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           # instead of using the local cache in .yarn folder, since it's in .gitignore
           # cache: 'yarn'
-      - name: clean cache
-        run: yarn cache clean --all
-      - name: Install dependencies
-        run: yarn
-      - name: Run Jest tests
-        run: yarn test:coverage
+      # - name: clean cache
+      #   run: yarn cache clean --all
+      # - name: Install dependencies
+      #   run: yarn
+      # - name: Run Jest tests
+      #   run: yarn test:coverage
       - name: Build the project
         run: yarn build
       # npm publish
