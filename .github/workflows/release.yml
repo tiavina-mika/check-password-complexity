@@ -160,6 +160,21 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_OWNER_TOKEN }}
 
       - run: echo "3. skipped = ${{ steps.changelog.outputs.skipped }}"
+
+    # autoapprove:
+    #   if: ${{ github.event.label.name == 'automerge' }}
+    #   runs-on: ubuntu-latest
+    #   permissions:
+    #     pull-requests: write
+    #   steps:
+      - uses: hmarr/auto-approve-action@v4
+        with:
+          review-message: "Auto approve sync PRs to auto merge them"
+
+    # automerge:
+    #   needs: [autoapprove]
+    #   runs-on: ubuntu-latest
+    #   steps:
       - id: automerge
         name: automerge
         uses: "pascalgn/automerge-action@v0.16.3"
