@@ -117,18 +117,10 @@ jobs:
           git-branch: ${{ env.PR_BRANCH }}
           skip-git-pull: true
           output-file: false
-          version-file: './package.json'
-          create-summary: true
-
-      - name: Conventional Changelog Action
-        id: changelog
-        uses: TriPSs/conventional-changelog-action@v5
-        with:
-          github-token: ${{ secrets.GH_TOKEN }}
-          # this will update the version in package.json
+                    # this will update the version in package.json
           # and therefore the npm package version
           version-file: './package.json'
-
+          create-summary: true
 
       - name: Create Changelog PR
         if: steps.changelog.outputs.skipped == 'false'
