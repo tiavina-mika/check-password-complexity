@@ -1,0 +1,48 @@
+# --------------------------------------------------- #
+# doc: https://github.com/TriPSs/conventional-changelog-action
+# tuto: https://nanthakumaran.medium.com/how-to-automate-releases-and-publish-packages-to-npm-using-github-actions-910d5128c0fa
+# npm token + github action: https://taozhi.medium.com/publish-package-to-npm-and-gpr-with-github-actions-e05793f72455
+# --------------------------------------------------- #
+
+name: Releases
+run-name: ${{ github.actor }} releases 🚀
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for npm provenance
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Conventional Changelog Action
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v5
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          # this will update the version in package.json
+          # and therefore the npm package version
+          version-file: './package.json'
+
+      - name: create release
+        uses: actions/create-release@v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          release_name: ${{ steps.changelog.outputs.tag }}
+          body: ${{ steps.changelog.outputs.clean_changelog }}
+
+      - run: echo "🎉 tag_name ${{ steps.changelog.outputs.tag }}"
