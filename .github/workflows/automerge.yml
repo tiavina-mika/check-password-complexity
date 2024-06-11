@@ -1,10 +1,6 @@
 name: Approve PR and delete branch
-on:
-  pull_request:
-    types:
-    # The 3 default types, if you still want them
-    - opened
-    - reopened
+on: pull_request_target
+
 env:
   PR_BRANCH: release-ci-${{ github.sha }}
 
