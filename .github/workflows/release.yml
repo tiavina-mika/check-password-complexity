@@ -179,6 +179,7 @@ jobs:
   publish_npm:
     name: Publish to NPM
     needs: release
+    if: needs.changelog.outputs.tag != ''
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
