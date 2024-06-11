@@ -1,9 +1,9 @@
-## 0.2.26 (2024-06-11)
+## 0.2.27 (2024-06-11)
 
 
 ### Bug Fixes
 
-* log tag ([8a4cf10](https://github.com/tiavina-mika/check-password-complexity/commit/8a4cf10e81982ccd6766554f3e8f9bc909259977))
+* tag test ([251f061](https://github.com/tiavina-mika/check-password-complexity/commit/251f0617f962d554871878ed0965945882db8185))
 
 
 
