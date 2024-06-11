@@ -36,8 +36,8 @@ jobs:
       #   run: yarn
       # - name: Run Jest tests
       #   run: yarn test:coverage
-      # - name: Build the project
-      #   run: yarn build
+      - name: Build the project
+        run: yarn build
       # npm publish
       - name: Publish package on NPM 📦
         # if using yarn v4
