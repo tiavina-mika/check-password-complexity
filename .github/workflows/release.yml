@@ -140,12 +140,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
-      - run: echo "3. skipped = ${{ steps.changelog.outputs.skipped }}"
+      - run: echo "3. event = ${{  github.event_name }}"
 
 
   release:
     name: Release
-    # needs: changelog
+    needs: changelog
     if: github.event_name != 'pull_request' && github.event_name != 'pull_request_target'
     runs-on: ubuntu-latest
 
