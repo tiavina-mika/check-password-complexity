@@ -1,9 +1,9 @@
-## 0.2.30 (2024-06-11)
+## 0.2.31 (2024-06-11)
 
 
 ### Bug Fixes
 
-* log deleted branch and event ([9df090c](https://github.com/tiavina-mika/check-password-complexity/commit/9df090c6ccbce88368e6612392009a15fcab7488))
+* release ([d30e04b](https://github.com/tiavina-mika/check-password-complexity/commit/d30e04b50ab73ef0a7041cd7871194687c73fc37))
 
 
 
