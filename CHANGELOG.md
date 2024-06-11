@@ -1,9 +1,9 @@
-## 0.2.23 (2024-06-11)
+## 0.2.24 (2024-06-11)
 
 
 ### Bug Fixes
 
-* workflow ([44fea01](https://github.com/tiavina-mika/check-password-complexity/commit/44fea016e5278eb54634704263beec65b62724c0))
+* automerge ([78d53fa](https://github.com/tiavina-mika/check-password-complexity/commit/78d53fab434d9d125ec9544060a4acb861712126))
 
 
 
