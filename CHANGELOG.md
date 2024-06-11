@@ -1,9 +1,9 @@
-## 0.2.28 (2024-06-11)
+## 0.2.29 (2024-06-11)
 
 
 ### Bug Fixes
 
-* upgrade example after published to npm ([604829b](https://github.com/tiavina-mika/check-password-complexity/commit/604829b765814f7ca8a906395204e3f6e049cd4b))
+* example ([77c0cca](https://github.com/tiavina-mika/check-password-complexity/commit/77c0ccaa2e877e8aa6b9f543686a96b11e450b27))
 
 
 
