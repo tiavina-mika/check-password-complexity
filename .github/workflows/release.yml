@@ -157,11 +157,9 @@ jobs:
         uses: actions/checkout@v4
 
       - run: echo "6. github event = ${{ github.event_name }}, tag name= ${{ github.ref }}, needs tag = ${{ needs.changelog.outputs.tag }}"
-      - run: echo "7. tag test = ${{ needs.changelog.outputs.tag != '' }}"
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
-        if: needs.changelog.outputs.tag != ''
         with:
           tag_name: ${{ needs.changelog.outputs.tag }}
           name: ${{ needs.changelog.outputs.tag }}
@@ -176,33 +174,32 @@ jobs:
               ${{ needs.changelog.outputs.clean_changelog }}
             </details>
 
-  publish_npm:
-    name: Publish to NPM
-    needs: release
-    if: needs.changelog.outputs.tag != ''
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
+  # publish_npm:
+  #   name: Publish to NPM
+  #   needs: release
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #       with:
+  #         persist-credentials: false
 
-      # need this for using yarn v4
-      - name: Enable Corepack
-        run: corepack enable
+  #     # need this for using yarn v4
+  #     - name: Enable Corepack
+  #       run: corepack enable
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          registry-url: 'https://registry.npmjs.org'
-          # instead of using the local cache in .yarn folder, since it's in .gitignore
-          cache: 'yarn'
-      - run: echo "8. event_name = ${{ github.event_name }}"
-      - run: echo "8. tag = ${{ needs.changelog.outputs.tag }}, tag name= ${{ github.ref }}"
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '20.x'
+  #         registry-url: 'https://registry.npmjs.org'
+  #         # instead of using the local cache in .yarn folder, since it's in .gitignore
+  #         cache: 'yarn'
+  #     - run: echo "8. event_name = ${{ github.event_name }}"
+  #     - run: echo "8. tag = ${{ needs.changelog.outputs.tag }}, tag name= ${{ github.ref }}"
 
-      # npm publish
-      - name: Publish package on NPM 📦
-        # if using yarn v4
-        run: yarn npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  #     # npm publish
+  #     - name: Publish package on NPM 📦
+  #       # if using yarn v4
+  #       run: yarn npm publish
+  #       env:
+  #         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

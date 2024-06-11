@@ -8,9 +8,8 @@
 name: Publish to NPM
 run-name: ${{ github.actor }} publish to npm 🚀
 # run on release creation
-on:
-  release:
-    types: [created]
+on: release
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -38,11 +37,13 @@ jobs:
       #   run: yarn test:coverage
       # - name: Build the project
       #   run: yarn build
+
+
       # npm publish
       - name: Publish package on NPM 📦
         # if using yarn v4
         run: yarn npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Update example lib
-        run: yarn example
+      # - name: Update example lib
+      #   run: yarn example
