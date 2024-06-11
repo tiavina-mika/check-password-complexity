@@ -156,7 +156,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - run: echo "6. github event = ${{ github.event_name }}, tag = ${{ steps.changelog.outputs.tag }}, tag name= ${{ github.ref }}, needs tag = ${{ needs.changelog.outputs.tag }}"
+      - run: echo "6. github event = ${{ github.event_name }}, tag name= ${{ github.ref }}, needs tag = ${{ needs.changelog.outputs.tag }}"
       - run: echo "7. tag test = ${{ needs.changelog.outputs.tag != '' }}"
 
       - name: Create Release
@@ -196,6 +196,8 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           # instead of using the local cache in .yarn folder, since it's in .gitignore
           cache: 'yarn'
+      - run: echo "8. event_name = ${{ github.event_name }}"
+      - run: echo "8. tag = ${{ needs.changelog.outputs.tag }}, tag name= ${{ github.ref }}"
 
       # npm publish
       - name: Publish package on NPM 📦
