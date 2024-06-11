@@ -1,6 +1,10 @@
 name: Approve PR and delete branch
-on: pull_request_target
-
+on:
+  pull_request:
+    types:
+    # The 3 default types, if you still want them
+    - opened
+    - reopened
 env:
   PR_BRANCH: release-ci-${{ github.sha }}
 
@@ -20,6 +24,8 @@ jobs:
     name: Merge PR branch
     needs: approve_pr_branch
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
 
     steps:
       - name: Checkout
