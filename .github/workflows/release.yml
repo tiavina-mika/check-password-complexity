@@ -1,12 +1,11 @@
 # --------------------------------------------------- #
-# doc: https://github.com/TriPSs/conventional-changelog-action
-# tuto: https://nanthakumaran.medium.com/how-to-automate-releases-and-publish-packages-to-npm-using-github-actions-910d5128c0fa
-# npm token + github action: https://taozhi.medium.com/publish-package-to-npm-and-gpr-with-github-actions-e05793f72455
+# ------------------------ 1 ------------------------ #
 # --------------------------------------------------- #
 
 name: Releases
 run-name: ${{ github.actor }} releases 🚀
 
+# run this workflow on push to main branch and pull requests
 on:
   push:
     branches:
@@ -45,8 +44,10 @@ jobs:
       - name: Lint
         run: yarn lint
 
+  # see: https://qa-nora.medium.com/unit-testing-with-jest-and-integration-with-github-actions-bc241b31d257
   test:
     name: Test
+    # need the previous job to be completed
     needs: lint
     runs-on: ubuntu-latest
 
@@ -119,6 +120,8 @@ jobs:
         run: |
           git checkout -b ${{ env.PR_BRANCH }}
 
+        # This action will bump version, tag commit and generate a changelog with conventional commits.
+        # see: https://github.com/TriPSs/conventional-changelog-action
       - name: Create Changelog
         uses: TriPSs/conventional-changelog-action@v5
         id: changelog
@@ -128,23 +131,22 @@ jobs:
           git-user-email: "github-actions[bot]@users.noreply.github.com"
           git-branch: ${{ env.PR_BRANCH }}
           skip-git-pull: true
-                    # this will update the version in package.json
+          # this will update the version in package.json
           # and therefore the npm package version
           version-file: './package.json'
           create-summary: true
 
-      - run: echo "1. skipped = ${{ steps.changelog.outputs.skipped }}, tag = ${{ steps.changelog.outputs.tag }}, clean_changelog = ${{ steps.changelog.outputs.clean_changelog }}, version = ${{ steps.changelog.outputs.version }}"
-      - run: echo "2. PR_BRANCH = ${{ env.PR_BRANCH }}"
-
+      # if the changelog is skipped, we do not need to create a PR
+      # create a PR with the changelog and the new version
+      # see: https://blog.kubesimplify.com/automated-github-releases-with-github-actions-and-conventional-commits
       - name: Create Changelog PR
         if: steps.changelog.outputs.skipped == 'false'
         run: |
           gh pr create --base main --head ${{ env.PR_BRANCH }} --title 'chore(release): ${{ steps.changelog.outputs.tag }} [skip-ci]' --body '${{ steps.changelog.outputs.clean_changelog }}'
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-
-      - run: echo "3. event = ${{  github.event_name }}"
-
+      # the PR is created, we can now merge and close it
+      # see: .github/workflows/automerge.yml
 
   release:
     name: Release
@@ -156,11 +158,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - run: echo "6. github event = ${{ github.event_name }}, tag name= ${{ github.ref }}, needs tag = ${{ needs.changelog.outputs.tag }}"
-      - run: echo "7. tag test = ${{ needs.changelog.outputs.tag != '' }}"
-
+        # Create GitHub Releases
+        # see: https://github.com/softprops/action-gh-release
       - name: Create Release
         uses: softprops/action-gh-release@v2
+        # it needs the tag to create the release
         if: needs.changelog.outputs.tag != ''
         with:
           tag_name: ${{ needs.changelog.outputs.tag }}
@@ -175,33 +177,3 @@ jobs:
 
               ${{ needs.changelog.outputs.clean_changelog }}
             </details>
-
-  # publish_npm:
-  #   name: Publish to NPM
-  #   needs: release
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-  #       with:
-  #         persist-credentials: false
-
-  #     # need this for using yarn v4
-  #     - name: Enable Corepack
-  #       run: corepack enable
-
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '20.x'
-  #         registry-url: 'https://registry.npmjs.org'
-  #         # instead of using the local cache in .yarn folder, since it's in .gitignore
-  #         cache: 'yarn'
-  #     - run: echo "8. event_name = ${{ github.event_name }}"
-  #     - run: echo "8. tag = ${{ needs.changelog.outputs.tag }}, tag name= ${{ github.ref }}"
-
-  #     # npm publish
-  #     - name: Publish package on NPM 📦
-  #       # if using yarn v4
-  #       run: yarn npm publish
-  #       env:
-  #         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

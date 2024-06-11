@@ -1,6 +1,9 @@
+# --------------------------------------------------- #
+# ------------------------ 2 ------------------------ #
+# --------------------------------------------------- #
+
 name: Approve PR and delete branch
 on: pull_request_target
-# on: pull_request_target
 
 env:
   PR_BRANCH: release-ci-${{ github.sha }}
@@ -12,13 +15,14 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - run: echo "2.0 automerge start = ${{ env.PR_BRANCH }}"
+      # Automatically approve GitHub pull requests.
+      # see: https://github.com/hmarr/auto-approve-action
       - uses: hmarr/auto-approve-action@v4
-      - run: echo "2.1 automerge end"
 
 
   merge_pr_branch:
     name: Merge PR branch
+    # we need to run this job after the approve_pr_branch job
     needs: approve_pr_branch
     runs-on: ubuntu-latest
     permissions:
@@ -33,6 +37,3 @@ jobs:
           gh pr merge --squash --auto --delete-branch ${{ env.PR_BRANCH }}
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-
-      - run: echo "9. event_name = ${{ github.event_name }}"
-      - run: echo "9. deleted branch = ${{ env.PR_BRANCH }}"
