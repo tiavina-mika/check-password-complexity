@@ -27,8 +27,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Merge Changelog PR
+      - name: Merge and delete Changelog PR
         run: |
           gh pr merge --squash --auto --delete-branch ${{ env.PR_BRANCH }}
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - run: echo "9. event_name = ${{ github.event_name }}"
+      - run: echo "9. deleted branch = ${{ env.PR_BRANCH }}"
