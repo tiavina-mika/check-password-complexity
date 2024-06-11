@@ -153,17 +153,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - run: echo "6. github event = ${{ github.event_name }}"
+      - run: echo "6. github event = ${{ github.event_name }}, tag = ${{ steps.changelog.outputs.tag }}"
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          token: ${{ secrets.GH_TOKEN }}
+          # token: ${{ secrets.GH_TOKEN }}
           tag_name: ${{ steps.changelog.outputs.tag }}
           prerelease: false
           draft: false
-          files: README.md
+          files: CHANGELOG.md
           generate_release_notes: true
           name: ${{ steps.changelog.outputs.tag }}
           body: |
