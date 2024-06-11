@@ -205,5 +205,7 @@ jobs:
         run: yarn npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Yarn install
+        run: yarn install
       - name: Update example lib
         run: yarn example

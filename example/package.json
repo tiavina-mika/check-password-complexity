@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --fix --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "clean-cache": "yarn cache clean --all",
-    "upgrade": "yarn && yarn add check-password-complexity@latest"
+    "upgrade": "yarn add check-password-complexity@latest"
   },
   "dependencies": {
     "check-password-complexity": "^0.1.5",
