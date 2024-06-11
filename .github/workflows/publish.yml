@@ -8,7 +8,14 @@
 name: Publish to NPM
 run-name: ${{ github.actor }} publish to npm 🚀
 # run on release creation
-on: release
+# on:
+#   release:
+#     types: [created]
+
+on:
+  workflow_run:
+    workflows: [Approve PR and delete branch]
+    types: [completed]
 
 jobs:
   build:
