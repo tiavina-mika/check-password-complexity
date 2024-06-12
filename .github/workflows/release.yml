@@ -12,6 +12,7 @@ on:
       - main
   # pull_request:
 
+    
 permissions:
   contents: write
   packages: write
