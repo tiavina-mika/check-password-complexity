@@ -12,11 +12,11 @@ If you encounter a problem with this library or if you have a new feature you'd 
 
 Please leverage the repository's own tools to make sure the code is aligned with our standards. If you're using VSCode, it's easiest to use the recommended extensions (`.vscode/extensions.json`) to get integrated linting and autoformatting.
 
-It's recommended to run all check commands before submitting the PR (`type:check`, `format:check`, `lint:check`, `spell:check` and `yarn lint`).
+It's recommended to run all check commands before submitting the PR (`type:check`, `format:check`, `lint:check`, `spell:check`, `yarn lint` and `yarn test:coverage`).
 
 ## Development setup
 
-1. Set up [yarn](https://yarnpkg.com/getting-started/install)
+1. Set up [yarn v4](https://yarnpkg.com/getting-started/install)
 2. Run `yarn`
 3. Run `yarn dev` and view the demo site at the printed localhost URL
 
@@ -29,10 +29,11 @@ To instead test a "built" version of this package which is installed into an "ex
 When a new version should be cut since some new changes have landed on the `main` branch, do the following to publish it:
 
 1. Go to the `main` branch and pull in the latest changes.
-2. Update the version in `package.json`.
-3. Commit change using (commit convention)[https://nanthakumaran.medium.com/conventional-commits-simplify-your-project-history-and-automate-tasks-29007273e198]
-4. Push the commit (ex: `git push origin main`)
-5. The `release.yml` GitHub Actions workflow will auto-generate a tag, change log and release note
+2. Commit change using (commit convention)[https://nanthakumaran.medium.com/conventional-commits-simplify-your-project-history-and-automate-tasks-29007273e198]
+3. Push the commit (ex: `git push origin main`)
+5. The `release.yml` GitHub Actions workflow will auto-generate a tag, change log, release note and a PR branch
+6. The `automerge.yml` GitHub Actions workflow will merge and delete the PR branch
+7. The `publish.yml` GitHub Actions workflow will publish the package to the npm registry
 
 ## Issue possibly encountered during installation
 - [with yarn](https://stackoverflow.com/questions/67062308/getting-yn0028-the-lockfile-would-have-been-modified-by-this-install-which-is-e)
