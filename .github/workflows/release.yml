@@ -114,8 +114,6 @@ jobs:
       PR_BRANCH: release-ci-${{ github.sha }}
 
     steps:
-      - run: echo "changelog steps outputs.tag = ${{ steps.changelog.outputs.tag }}"
-
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -161,18 +159,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - run: echo "Release startsWith = ${{ startsWith(github.ref, 'refs/tags/') }}"
-      - run: echo "Release head_commit = ${{ github.event.head_commit.message }}"
-      - run: echo "Release contains = ${{ contains(github.event.head_commit.message, '[release]') }}"
         # Create GitHub Releases
         # see: https://github.com/softprops/action-gh-release
       - name: Create Release
         uses: softprops/action-gh-release@v2
         # it needs the tag to create the release
-        # if: needs.changelog.outputs.tag != ''
+        if: needs.changelog.outputs.tag != ''
         with:
-          # tag_name: ${{ needs.changelog.outputs.tag }}
-          # name: ${{ needs.changelog.outputs.tag }}
+          tag_name: ${{ needs.changelog.outputs.tag }}
+          name: ${{ needs.changelog.outputs.tag }}
           prerelease: false
           draft: false
           files: CHANGELOG.md
