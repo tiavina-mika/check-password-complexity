@@ -19,7 +19,6 @@ jobs:
       # see: https://github.com/hmarr/auto-approve-action
       - uses: hmarr/auto-approve-action@v4
 
-
   merge_pr_branch:
     name: Merge PR branch
     # we need to run this job after the approve_pr_branch job
