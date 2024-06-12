@@ -1,7 +1,7 @@
-## 1.1.0 (2024-06-12)
+## 1.2.0 (2024-06-12)
 
 
 ### Features
 
-* update wf ([47f1e83](https://github.com/tiavina-mika/check-password-complexity/commit/47f1e8308a18cc4d85809ebd34b48118ebf92c6b))
+* update contribution doc ([#41](https://github.com/tiavina-mika/check-password-complexity/issues/41)) ([b473a28](https://github.com/tiavina-mika/check-password-complexity/commit/b473a289863d95a344344b9fcae352aedf02f6fa))
 
