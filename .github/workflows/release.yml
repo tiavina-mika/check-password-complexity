@@ -12,7 +12,7 @@ on:
       - main
   # pull_request:
 
-    
+
 permissions:
   contents: write
   packages: write
@@ -164,7 +164,7 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         # it needs the tag to create the release
-        if: needs.changelog.outputs.tag != ''
+        # if: needs.changelog.outputs.tag != ''
         with:
           tag_name: ${{ needs.changelog.outputs.tag }}
           name: ${{ needs.changelog.outputs.tag }}
