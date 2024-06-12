@@ -1,5 +1,5 @@
-// import path from 'path';
-// import { fileURLToPath } from 'url';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import js from "@eslint/js";
 // import { FlatCompat } from "@eslint/eslintrc";
 import comments from "@eslint-community/eslint-plugin-eslint-comments/configs";
@@ -20,8 +20,8 @@ import reactRecommended from 'eslint-plugin-react/configs/recommended.js';
  * see: https://iamwebwiz.medium.com/how-to-fix-dirname-is-not-defined-in-es-module-scope-34d94a86694d
  */
 
-// const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
-// const __dirname = path.dirname(__filename); // get the name of the directory
+const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+const __dirname = path.dirname(__filename); // get the name of the directory
 
 // const compat = new FlatCompat({
 //   baseDirectory: __dirname,
@@ -52,7 +52,7 @@ export default tseslint.config(
   // })
   ...tseslint.configs.strict,
   ...tseslint.configs.stylistic,
-  // reactRecommended,
+  reactRecommended,
   {
     files: ["**/*.ts", "**/*.tsx"],
     languageOptions: {
