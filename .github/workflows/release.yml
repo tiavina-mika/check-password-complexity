@@ -161,6 +161,8 @@ jobs:
 
       - run: echo "Release outputs.tag = ${{ needs.changelog.outputs.tag }}, github.ref = ${{ github.ref }}"
       - run: echo "Release startsWith = ${{ startsWith(github.ref, 'refs/tags/') }}"
+      - run: echo "Release head_commit = ${{ github.event.head_commit.message }}"
+      - run: echo "Release contains = ${{ contains(github.event.head_commit.message, '[release]') }}"
         # Create GitHub Releases
         # see: https://github.com/softprops/action-gh-release
       - name: Create Release
