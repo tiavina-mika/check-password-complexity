@@ -14,10 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+    if: github.actor == 'dependabot[bot]'
     steps:
       # Automatically approve GitHub pull requests.
       # see: https://github.com/hmarr/auto-approve-action
       - uses: hmarr/auto-approve-action@v4
+        with:
+          review-message: "Auto approved automated PR by dependabot"
 
 
   merge_pr_branch:
