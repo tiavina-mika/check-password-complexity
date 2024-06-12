@@ -1,18 +1,18 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
+// import path from 'path';
+// import { fileURLToPath } from 'url';
 import js from "@eslint/js";
 // import { FlatCompat } from "@eslint/eslintrc";
 import comments from "@eslint-community/eslint-plugin-eslint-comments/configs";
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import tseslint from 'typescript-eslint';
 import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
-import { fixupPluginRules } from "@eslint/compat";
+// import { fixupPluginRules } from "@eslint/compat";
 import reactRefresh from "eslint-plugin-react-refresh";
 import jest from 'eslint-plugin-jest';
+import { fixupPluginRules } from "@eslint/compat";
 // import react from 'eslint-plugin-react';
 // import globals from 'globals';
 import reactRecommended from 'eslint-plugin-react/configs/recommended.js';
-
 /**
  *
  * To avoid the error: "dirname is not defined in ES module scope"
@@ -20,22 +20,39 @@ import reactRecommended from 'eslint-plugin-react/configs/recommended.js';
  * see: https://iamwebwiz.medium.com/how-to-fix-dirname-is-not-defined-in-es-module-scope-34d94a86694d
  */
 
-const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
-const __dirname = path.dirname(__filename); // get the name of the directory
+// const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+// const __dirname = path.dirname(__filename); // get the name of the directory
 
 // const compat = new FlatCompat({
-//   baseDirectory: __dirname
+//   baseDirectory: __dirname,
 // });
 
 export default tseslint.config(
   js.configs.recommended,
   comments.recommended,
   eslintPluginPrettierRecommended,
-  // ...compat.extends("airbnb"),
-  // ...compat.extends("airbnb-typescript"),
+  /*
+    TODO: airbnb-typescript does not support eslint v9 flat config as of 2024/06/12 yet
+    see: https://github.com/iamturns/eslint-config-airbnb-typescript/issues/331
+  */
+  // ...compat.extends("airbnb-base"),
+  // ...compat.extends("airbnb-typescript/base"),
+
+  /**
+   * another workaround is to use the following code
+   * see: https://stackoverflow.com/questions/78253188/flat-config-file-with-configs-from-legacy-eslintrc-compat-error
+   * but it is not working as expected
+   */
+  // ...compat.extends("airbnb-typescript/base").map(c => {
+  //   if (c.plugins) {
+  //     // @ts-expect-error
+  //     c.plugins['@typescript-eslint'] = tseslint.plugin;
+  //   }
+  //   return c
+  // })
   ...tseslint.configs.strict,
   ...tseslint.configs.stylistic,
-  reactRecommended,
+  // reactRecommended,
   {
     files: ["**/*.ts", "**/*.tsx"],
     languageOptions: {
@@ -50,10 +67,10 @@ export default tseslint.config(
     },
     plugins: {
       "react-refresh": reactRefresh,
-      // @TODO: https://github.com/JamieMason/eslint-plugin-prefer-arrow-functions/issues/33
+      // TODO: https://github.com/JamieMason/eslint-plugin-prefer-arrow-functions/issues/33
       // "prefer-arrow-functions": "prefer-arrow-functions",
       'react-hooks': fixupPluginRules(eslintPluginReactHooks),
-      '@typescript-eslint': tseslint.plugin,
+      // '@typescript-eslint': tseslint.plugin,
     },
     // parserOptions: {
     //   tsconfigRootDir: __dirname,
@@ -161,5 +178,5 @@ export default tseslint.config(
       ...jest.configs['flat/recommended'].rules,
       'jest/prefer-expect-assertions': 'off',
     },
-  },
+  }
 );
