@@ -17,6 +17,7 @@ jobs:
       pull-requests: write
     # if: github.actor == 'dependabot[bot]'
     steps:
+      - run: echo "GitHub actor - ${{ github.actor }}"
       # Automatically approve GitHub pull requests.
       # see: https://github.com/hmarr/auto-approve-action
       - uses: hmarr/auto-approve-action@v4

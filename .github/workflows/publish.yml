@@ -14,7 +14,7 @@ on:
   # see: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run
   workflow_run:
     # the workflow we want to trigger this workflow (see .github/workflows/automerge.yml)
-    workflows: [Approve PR branch]
+    workflows: [Approve PR and delete branch]
     types: [completed]
   # run on release creation
   #   release:
