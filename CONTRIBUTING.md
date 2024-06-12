@@ -29,11 +29,11 @@ To instead test a "built" version of this package which is installed into an "ex
 When a new version should be cut since some new changes have landed on the `main` branch, do the following to publish it:
 
 1. Go to the `main` branch and pull in the latest changes.
-2. Commit change using (commit convention)[https://nanthakumaran.medium.com/conventional-commits-simplify-your-project-history-and-automate-tasks-29007273e198]
+2. Commit change using (commit convention)[https://www.conventionalcommits.org/en/v1.0.0-beta.4/]
 3. Push the commit (ex: `git push origin main`)
-5. The `release.yml` GitHub Actions workflow will auto-generate a tag, change log, release note and a PR branch
-6. The `automerge.yml` GitHub Actions workflow will merge and delete the PR branch
-7. The `publish.yml` GitHub Actions workflow will publish the package to the npm registry
+4. The `release.yml` GitHub Actions workflow will auto-generate a tag, change log, release note and a PR branch
+5. The `automerge.yml` GitHub Actions workflow will merge and delete the PR branch
+6. The `publish.yml` GitHub Actions workflow will publish the package to the npm registry
 
 ## Issue possibly encountered during installation
 - [with yarn](https://stackoverflow.com/questions/67062308/getting-yn0028-the-lockfile-would-have-been-modified-by-this-install-which-is-e)
