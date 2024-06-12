@@ -170,8 +170,8 @@ jobs:
         # it needs the tag to create the release
         # if: needs.changelog.outputs.tag != ''
         with:
-          tag_name: ${{ needs.changelog.outputs.tag }}
-          name: ${{ needs.changelog.outputs.tag }}
+          # tag_name: ${{ needs.changelog.outputs.tag }}
+          # name: ${{ needs.changelog.outputs.tag }}
           prerelease: false
           draft: false
           files: CHANGELOG.md
