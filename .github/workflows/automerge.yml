@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.actor == 'dependabot[bot]'
+    # if: github.actor == 'dependabot[bot]'
     steps:
       # Automatically approve GitHub pull requests.
       # see: https://github.com/hmarr/auto-approve-action

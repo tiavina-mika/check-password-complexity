@@ -10,6 +10,7 @@ on:
   push:
     branches:
       - main
+  # pull_request:
 
 permissions:
   contents: write
@@ -139,7 +140,7 @@ jobs:
       # create a PR with the changelog and the new version
       # see: https://blog.kubesimplify.com/automated-github-releases-with-github-actions-and-conventional-commits
       - name: Create Changelog PR
-        if: steps.changelog.outputs.skipped == 'false' && github.actor == 'dependabot[bot]'
+        if: steps.changelog.outputs.skipped == 'false'
         run: |
           gh pr create --base main --head ${{ env.PR_BRANCH }} --title 'chore(release): ${{ steps.changelog.outputs.tag }} [skip-ci]' --body '${{ steps.changelog.outputs.clean_changelog }}'
         env:
@@ -156,9 +157,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - run: echo "🎉 tag - ${{ needs.changelog.outputs.tag }}"
-      - run: echo "🎉 tag 2 - ${{ needs.changelog.outputs.tag != '' }}"
 
         # Create GitHub Releases
         # see: https://github.com/softprops/action-gh-release
@@ -179,28 +177,3 @@ jobs:
 
               ${{ needs.changelog.outputs.clean_changelog }}
             </details>
-
-  publish:
-    runs-on: ubuntu-latest
-    needs: release
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-
-      # need this for using yarn v4
-      - name: Enable Corepack
-        run: corepack enable
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          registry-url: 'https://registry.npmjs.org'
-
-      # npm publish
-      - name: Publish package on NPM 📦
-        # if using yarn v4
-        run: yarn npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
