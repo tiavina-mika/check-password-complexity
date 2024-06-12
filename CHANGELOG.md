@@ -1,9 +1,9 @@
-## 0.2.33 (2024-06-11)
+## 0.2.34 (2024-06-12)
 
 
 ### Bug Fixes
 
-* trigger build ([a0a4fe5](https://github.com/tiavina-mika/check-password-complexity/commit/a0a4fe50731e374df210f812249fa0ca62904055))
+* wf ([910c04e](https://github.com/tiavina-mika/check-password-complexity/commit/910c04e359806f1f626ce1e045889f082a0df073))
 
 
 
