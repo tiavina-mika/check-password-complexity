@@ -10,7 +10,7 @@ on:
   push:
     branches:
       - main
-  # pull_request:
+  pull_request:
 
 permissions:
   contents: write
@@ -177,3 +177,5 @@ jobs:
 
               ${{ needs.changelog.outputs.clean_changelog }}
             </details>
+
+            

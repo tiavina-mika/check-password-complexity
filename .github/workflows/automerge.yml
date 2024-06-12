@@ -9,22 +9,17 @@ env:
   PR_BRANCH: release-ci-${{ github.sha }}
 
 jobs:
-  # run only for dependabot PRs
   approve_pr_branch:
     name: Approve PR branch
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    # if: github.actor == 'dependabot[bot]'
     steps:
-      - run: echo "GitHub actor - ${{ github.actor }}"
       # Automatically approve GitHub pull requests.
       # see: https://github.com/hmarr/auto-approve-action
       - uses: hmarr/auto-approve-action@v4
-        with:
-          review-message: "Auto approved automated PR by dependabot"
 
-  # run only for dependabot PRs
+
   merge_pr_branch:
     name: Merge PR branch
     # we need to run this job after the approve_pr_branch job
@@ -32,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    # if: github.actor == 'dependabot[bot]'
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
