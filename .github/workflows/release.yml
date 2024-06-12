@@ -157,6 +157,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - run: echo "🎉 tag - ${{ needs.changelog.outputs.tag }}"
+      - run: echo "🎉 tag 2 - ${{ needs.changelog.outputs.tag != '' }}"
+
         # Create GitHub Releases
         # see: https://github.com/softprops/action-gh-release
       - name: Create Release
