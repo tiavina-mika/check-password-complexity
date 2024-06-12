@@ -24,7 +24,6 @@ jobs:
         with:
           review-message: "Auto approved automated PR by dependabot"
 
-
   # run only for dependabot PRs
   merge_pr_branch:
     name: Merge PR branch
