@@ -119,6 +119,8 @@ jobs:
         run: |
           git checkout -b ${{ env.PR_BRANCH }}
 
+      - run: echo "🎉 event - ${{ github.event_name }}"
+
         # This action will bump version, tag commit and generate a changelog with conventional commits.
         # see: https://github.com/TriPSs/conventional-changelog-action
       - name: Create Changelog
@@ -139,7 +141,7 @@ jobs:
       # create a PR with the changelog and the new version
       # see: https://blog.kubesimplify.com/automated-github-releases-with-github-actions-and-conventional-commits
       - name: Create Changelog PR
-        if: steps.changelog.outputs.skipped == 'false'
+        if: steps.changelog.outputs.skipped == 'false' && github.actor == 'dependabot[bot]'
         run: |
           gh pr create --base main --head ${{ env.PR_BRANCH }} --title 'chore(release): ${{ steps.changelog.outputs.tag }} [skip-ci]' --body '${{ steps.changelog.outputs.clean_changelog }}'
         env:
