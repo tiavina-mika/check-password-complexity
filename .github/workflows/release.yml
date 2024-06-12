@@ -127,6 +127,7 @@ jobs:
         uses: TriPSs/conventional-changelog-action@v5
         id: changelog
         with:
+          preset: 'conventionalcommits'
           github-token: ${{ secrets.GH_TOKEN }}
           git-user-name: "github-actions[bot]"
           git-user-email: "github-actions[bot]@users.noreply.github.com"
@@ -155,7 +156,7 @@ jobs:
     if: github.event_name != 'pull_request' && github.event_name != 'pull_request_target'
     runs-on: ubuntu-latest
 
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
