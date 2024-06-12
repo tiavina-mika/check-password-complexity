@@ -14,8 +14,9 @@ on:
   # see: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run
   workflow_run:
     # the workflow we want to trigger this workflow (see .github/workflows/automerge.yml)
-    workflows: [Approve PR and delete branch]
+    workflows: [Releases]
     types: [completed]
+    branches: [main]
   # run on release creation
   #   release:
     #     types: [created]
@@ -29,6 +30,8 @@ jobs:
         with:
           persist-credentials: false
 
+      - run: echo "🎉 workflow_run conclusion - ${{ github.event.workflow_run.conclusion }}"
+      - run: echo "🎉 event - ${{  github.event_name }}"
       # need this for using yarn v4
       - name: Enable Corepack
         run: corepack enable
