@@ -2,13 +2,13 @@ import { ChangeEvent, useState } from "react";
 
 import { checkPasswordComplexity } from "check-password-complexity";
 
-
 const App = () => {
   const [password, setPassword] = useState<string>('');
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   }
+  
   return (
     <div className="root">
       <div>
