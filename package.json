@@ -46,7 +46,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "dev": "vite",
-    "build": "yarn clean && tsc --project tsconfig.build.json && tsc --project tsconfig.build-esm.json && yarn copy-files && yarn copy-files-esm && yarn fixImportExtension",
+    "build": "yarn clean && tsc --project tsconfig.build.json && tsc --project tsconfig.build-esm.json && yarn fixImportExtension",
     "prepare": "npm run build",
     "preview": "vite preview",
     "type:check": "tsc --noEmit",
@@ -58,8 +58,6 @@
     "spell:check": "cspell \"{README.md,CONTRIBUTING.md,.github/*.md}\"",
     "visualize": "npx vite-bundle-visualizer",
     "publish": "yarn build && yarn npm publish",
-    "copy-files": "copyfiles -u 1 src/*types.d.ts dist/",
-    "copy-files-esm": "copyfiles -u 1 src/*types.d.ts dist/esm",
     "clean-cache": "yarn cache clean --all",
     "fixImportExtension": "ts-add-js-extension --dir=dist",
     "example": "cd example && yarn upgrade",

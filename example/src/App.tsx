@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from "react";
+
 import { checkPasswordComplexity } from "check-password-complexity";
 
 const App = () => {
