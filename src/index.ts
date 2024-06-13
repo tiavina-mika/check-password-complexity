@@ -1,5 +1,8 @@
 export {
-  default as checkPasswordComplexity,
+  checkPasswordComplexity,
+} from './utils';
+
+export {
   type CheckPasswordOptions,
   type CheckOptionResult
-} from './utils';
+} from './types.d';

@@ -11,3 +11,13 @@ export type ScoreOption = {
 };
 
 
+export type CheckOptionResult = {
+  checkedRules: CheckOption["name"][];
+  value: ScoreOption["name"];
+  length: number;
+};
+
+export type CheckPasswordOptions = {
+  minLength?: number;
+  allowedSpecialChar?: string;
+};
