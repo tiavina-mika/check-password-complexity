@@ -83,5 +83,6 @@ export const checkPasswordComplexity = (
     checkedRules,
     value: strength?.name || scoreOptions[0].name,
     length: password.length,
+    score: strength?.score || scoreOptions[0].score,
   };
 };
