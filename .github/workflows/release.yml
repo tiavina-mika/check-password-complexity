@@ -127,7 +127,7 @@ jobs:
         uses: TriPSs/conventional-changelog-action@v5
         id: changelog
         with:
-          preset: 'conventionalcommits'
+          # preset: 'conventionalcommits'
           github-token: ${{ secrets.GH_TOKEN }}
           git-user-name: "github-actions[bot]"
           git-user-email: "github-actions[bot]@users.noreply.github.com"
