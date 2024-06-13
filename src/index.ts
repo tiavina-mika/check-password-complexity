@@ -1,5 +1,5 @@
 export {
-  checkPasswordComplexity
+  default as checkPasswordComplexity
 } from './utils';
 
 export {

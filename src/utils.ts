@@ -24,7 +24,7 @@ const scoreOptions: ScoreOption[] = [
 ];
 
 
-export const checkPasswordComplexity = (
+const checkPasswordComplexity = (
   password: string,
   options?: Options
 ): CheckOptionResult => {
@@ -86,3 +86,5 @@ export const checkPasswordComplexity = (
     length: password.length,
   };
 };
+
+export default checkPasswordComplexity;
