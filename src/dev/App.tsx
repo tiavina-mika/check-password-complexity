@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { checkPasswordComplexity } from "../utils";
+import checkPasswordComplexity from "../utils";
 
 const App = () => {
   const [password, setPassword] = useState<string>('');

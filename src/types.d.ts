@@ -10,13 +10,4 @@ export type ScoreOption = {
   name: Strength;
 };
 
-export type CheckOptionResult = {
-  checkedRules: CheckOption["name"][];
-  value: ScoreOption["name"];
-  length: number;
-};
 
-export type Options = {
-  minLength?: number;
-  allowedSpecialChar?: string;
-};

@@ -1,4 +1,4 @@
-import { CheckOption, CheckOptionResult, Options, ScoreOption } from './types.d';
+import { CheckOption, ScoreOption } from './types.d';
 
 const scoreOptions: ScoreOption[] = [
   {
@@ -23,10 +23,20 @@ const scoreOptions: ScoreOption[] = [
   },
 ];
 
+export type CheckOptionResult = {
+  checkedRules: CheckOption["name"][];
+  value: ScoreOption["name"];
+  length: number;
+};
+
+export type CheckPasswordOptions = {
+  minLength?: number;
+  allowedSpecialChar?: string;
+};
 
 const checkPasswordComplexity = (
   password: string,
-  options?: Options
+  options?: CheckPasswordOptions
 ): CheckOptionResult => {
   const minLength = options?.minLength || 8;
   const allowedSpecialChar = options?.allowedSpecialChar || "!@#$%^&*(),.?\":{}|<>\\[\\]\\\\/`~;'_+=-";
