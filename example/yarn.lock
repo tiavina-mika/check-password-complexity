@@ -1187,7 +1187,7 @@ __metadata:
     "@vitejs/plugin-react": "npm:^4.2.1"
     autoprefixer: "npm:^10.4.19"
     babel-plugin-module-resolver: "npm:^5.0.0"
-    check-password-complexity: "npm:^1.4.1"
+    check-password-complexity: "npm:^1.4.2"
     eslint: "npm:^8.56.0"
     eslint-config-airbnb: "npm:^19.0.4"
     eslint-config-airbnb-typescript: "npm:^17.1.0"
@@ -1551,13 +1551,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"check-password-complexity@npm:^1.4.1":
-  version: 1.4.1
-  resolution: "check-password-complexity@npm:1.4.1"
+"check-password-complexity@npm:^1.4.2":
+  version: 1.4.2
+  resolution: "check-password-complexity@npm:1.4.2"
   peerDependencies:
     react: ^16.8.0 || ^17.0.2 || ^18.2.0
     react-dom: ^16.8.0 || ^17.0.2 || ^18.2.0
-  checksum: 10c0/e6953a1cd9e6666ebe26117819521b3af35710ac642f2c734916a0f668ea285faf937263ce41c8cc9beda4ba5a6e88eda0ba89921e8ffa88741fa16e89b91fb3
+  checksum: 10c0/8a9826bb0de2baa3ae610ba924705030fc09209ca11d7ab11e1e48b86083813f992d21219c857eb277d9ebd638c9dbc30dfc5442c6d201c004d72568093a5a7c
   languageName: node
   linkType: hard
 

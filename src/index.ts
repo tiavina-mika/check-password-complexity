@@ -1,5 +1,5 @@
 export {
   default as checkPasswordComplexity,
-  type CheckPasswordOptions as Options,
+  type CheckPasswordOptions,
   type CheckOptionResult
 } from './utils';
