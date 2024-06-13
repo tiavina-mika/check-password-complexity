@@ -133,6 +133,7 @@ jobs:
           git-user-email: "github-actions[bot]@users.noreply.github.com"
           git-branch: ${{ env.PR_BRANCH }}
           skip-git-pull: true
+          skip-on-empty: false
           # this will update the version in package.json
           # and therefore the npm package version
           version-file: './package.json'
