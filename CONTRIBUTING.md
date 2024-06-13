@@ -42,3 +42,8 @@ When a new version should be cut since some new changes have landed on the `main
    . `yarn cache clean --all`
    . Create an empty `yarn.lock`
    . run `yarn`
+
+## TODO:
+#### finish eslint v9 upgrade
+- upgrade [eslint-plugin-prefer-arrow-functions](https://github.com/JamieMason/eslint-plugin-prefer-arrow-functions/issues/33) using eslint v9
+- upgrade [eslint-config-airbnb-typescript](https://github.com/iamturns/eslint-config-airbnb-typescript/issues/331) using eslint v9
