@@ -75,6 +75,7 @@ export const checkPasswordComplexity = (
   });
 
   const finalScore: number = checkedRules.length;
+
   const strength: ScoreOption | undefined = scoreOptions.find(
     (option: ScoreOption): boolean => option.score === finalScore
   );
@@ -83,6 +84,9 @@ export const checkPasswordComplexity = (
     checkedRules,
     value: strength?.name || scoreOptions[0].name,
     length: password.length,
-    score: strength?.score || scoreOptions[0].score,
+    score: strength
+      // get 3 for medium strength
+      ? strength.name === "medium" ? 3 : strength?.score
+      : scoreOptions[0].score,
   };
 };
