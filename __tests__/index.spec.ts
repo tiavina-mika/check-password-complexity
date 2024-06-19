@@ -1,6 +1,6 @@
 // import {describe, expect, test} from '@jest/globals';
 
-import { checkPasswordComplexity } from "../utils";
+import { checkPasswordComplexity } from "../src/utils";
 
 describe('test score', () => {
   test('abcdefgh is tooWeak', () => {

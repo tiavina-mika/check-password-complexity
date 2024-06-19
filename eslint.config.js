@@ -172,7 +172,7 @@ export default tseslint.config(
     ],
   },
   {
-    files: ["src/__tests__/**/*"],
+    files: ["__tests__/**/*"],
     ...jest.configs['flat/recommended'],
     rules: {
       ...jest.configs['flat/recommended'].rules,
