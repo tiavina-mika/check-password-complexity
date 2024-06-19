@@ -27,8 +27,10 @@ export const checkPasswordComplexity = (
   password: string,
   options?: CheckPasswordOptions
 ): CheckOptionResult => {
-  const minLength = options?.minLength || 8;
-  const allowedSpecialChar = options?.allowedSpecialChar || "!@#$%^&*(),.?\":{}|<>\\[\\]\\\\/`~;'_+=-";
+  const {
+    minLength = 8,
+    allowedSpecialChar = "!@#$%^&*(),.?\":{}|<>\\[\\]\\\\/`~;'_+=-"
+  } = options || {};
 
   const rules: CheckOption[] = [
     // password length
