@@ -7,24 +7,19 @@
 </p>
 
 ## Demo
-Try it yourself in this **[CodeSandbox demo](https://codesandbox.io/p/github/tiavina-mika/check-password-complexity-demo)**
-Or
-this **[Live demo](https://check-password-complexity.netlify.app/)**
+- **[CodeSandbox demo](https://codesandbox.io/p/github/tiavina-mika/check-password-complexity-demo)**
+- **[Live demo](https://check-password-complexity.netlify.app/)**
 
 
 ## Installation
 
 ```shell
-
-npm  install  check-password-complexity
-
+npm  install check-password-complexity
 ```
 or
 ```shell
-
-yarn  add  check-password-complexity
+yarn  add check-password-complexity
 ```
-
 
 ## Get started
 
@@ -39,17 +34,17 @@ const { checkPasswordComplexity } require("check-password-complexity");
 
 console.log(checkPasswordComplexity("abcdefgh").value); // tooWeak
 
-console.log(checkPasswordComplexity("abcdefg8").value); // weak
+checkPasswordComplexity("abcdefg8").value; // weak
 
-console.log(checkPasswordComplexity("abcdefgh9").value); // medium
+checkPasswordComplexity("abcdefgh9").value; // medium
 
-console.log(checkPasswordComplexity("abcdefgh9F=").value); // strong
+checkPasswordComplexity("abcdefgh9F=").value; // strong
 
 ```
 
 ## Result
 
-|property |type                          | Description |
+|Property |Type                          | Description |
 |----------------|-------------------------------|-----------------------------|
 |value|`tooWeak, weak, medium, strong`| Too Weak, Weak, Medium or Strong
 |checkedRules|`(minLength, lowercase, uppercase, number, specialCharacter)[]`| List of all checked values
@@ -58,25 +53,28 @@ console.log(checkPasswordComplexity("abcdefgh9F=").value); // strong
 <br />
 
 ```tsx
-  console.log(checkPasswordComplexity("abcdefg"));
+  checkPasswordComplexity("abcdefg");
   /**
      checkedRules: ['lowercase']
       length: 7
       value: "tooWeak"
    */
-  console.log(checkPasswordComplexity("abcdefg8"));
+
+  checkPasswordComplexity("abcdefg8");
   /**
      checkedRules: ['lowercase', 'number']
       length: 8
       value: "weak"
    */
-  console.log(checkPasswordComplexity("abcdefgh9"));
+
+  checkPasswordComplexity("abcdefgh9");
   /**
      checkedRules: ['minLength', 'lowercase', 'number']
       length: 9
       value: "medium"
    */
-  console.log(checkPasswordComplexity("abcdefgh9F="));
+
+  checkPasswordComplexity("abcdefgh9F=");
   /**
      checkedRules: ['minLength', 'lowercase', 'uppercase', 'number', 'specialCharacter']
       length: 11
@@ -93,7 +91,7 @@ console.log(checkPasswordComplexity("abcdefgh9F=").value); // strong
 <br />
 
 ```tsx
-  console.log(checkPasswordComplexity("abcdefg", { minLength: 6 }));
+  checkPasswordComplexity("abcdefg", { minLength: 6 });
   /**
      checkedRules: ['minLength', 'lowercase']
       length: 7
@@ -101,13 +99,17 @@ console.log(checkPasswordComplexity("abcdefgh9F=").value); // strong
    */
 
    // example: "." is the special character to be allowed
-  console.log(checkPasswordComplexity("abcdefg.", { allowedSpecialChar: "." }));
+  checkPasswordComplexity("abcdefg.", { allowedSpecialChar: "." });
   /**
      checkedRules: ['lowercase', 'specialCharacter']
       length: 8
       value: "weak"
    */
 ```
+
+## Libraries using `check-password-complexity`
+- [password-strength-input](https://www.npmjs.com/package/password-strength-input)
+- [mui-password-strength-input](https://www.npmjs.com/package/mui-password-strength-input)
 
 ## Contributing
 Contributions & pull requests are welcome!
