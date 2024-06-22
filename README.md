@@ -30,7 +30,7 @@ import { checkPasswordComplexity } from "check-password-complexity";
 
 // OR
 
-const { checkPasswordComplexity } require("check-password-complexity");
+const { checkPasswordComplexity } = require("check-password-complexity");
 
 console.log(checkPasswordComplexity("abcdefgh").value); // tooWeak
 
